@@ -12,7 +12,13 @@ import {
   GitBranch,
   Share2,
   AlertCircle,
-  BrainCircuit
+  BrainCircuit,
+  Wrench,
+  Clock,
+  Gauge,
+  Sparkles,
+  BookOpen,
+  Target
 } from 'lucide-react';
 import { MOCK_CHALLENGES } from '@/lib/mock-data';
 import { useChallengeContext } from '@/context/ChallengeContext';
@@ -26,11 +32,7 @@ import { StatusBadge } from '@/components/shared/StatusBadge';
 import { cn } from '@/lib/utils';
 import { Progress } from '@/components/ui/progress';
 
-const WHY_IT_MATTERS: Record<number, string> = {
-  1: "Creating a solid local environment ensures you can rapidly build and test code without friction. A basic API is the foundation of backend engineering.",
-  2: "Every real-world application requires security. Understanding how to intercept requests and protect routes is mandatory for any production system.",
-  3: "Databases allow your application to have memory. Without persistent storage, your applications cannot remember users, orders, or state between restarts.",
-};
+// No hardcoded why_it_matters needed anymore; fetched from challenge data structure directly.
 
 export default function DailyChallengePage({ params }: { params: Promise<{ dayId: string }> }) {
   const unwrappedParams = use(params);
@@ -62,8 +64,6 @@ export default function DailyChallengePage({ params }: { params: Promise<{ dayId
 
   const isCompleted = dayState?.activityStatus === 'submitted';
   const progressPercentage = Math.round((dayId / 60) * 100);
-  const defaultWhyMatters = "Understanding the concepts internally allows you to architect solutions from scratch, rather than relying on copying code you don't understand.";
-  const whyItMatters = WHY_IT_MATTERS[dayId] || defaultWhyMatters;
   const isCheckpoint = dayId % 3 === 0;
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -91,46 +91,97 @@ export default function DailyChallengePage({ params }: { params: Promise<{ dayId
           <Progress value={progressPercentage} className="h-2.5 bg-slate-200 [&>div>div]:bg-blue-600" />
         </div>
 
-        {/* TODAY'S CHALLENGE */}
-        <div className="bg-white rounded-3xl p-8 md:p-10 shadow-sm border border-slate-200 mb-8 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-blue-50 rounded-full blur-[80px] pointer-events-none -mr-20 -mt-20" />
-          <div className="relative z-10 flex flex-col items-start gap-4">
-            <div className="flex items-center gap-3">
-              <div className="p-3 bg-blue-100 text-blue-700 rounded-2xl">
-                <Code2 className="w-6 h-6" />
-              </div>
-              <div className="flex items-center gap-2">
-                <StatusBadge type="activity" status={dayState?.activityStatus || 'not_started'} />
-                {isCompleted && (
-                  <StatusBadge type="understanding" status={dayState?.understandingStatus || 'not_checked'} />
-                )}
-              </div>
-            </div>
-            
-            <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mt-2">
-              {challenge.title}
-            </h1>
-            <p className="text-lg text-slate-600 font-medium leading-relaxed max-w-2xl">
-              {challenge.description}
-            </p>
-          </div>
-        </div>
-
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           
           <div className="md:col-span-2 flex flex-col gap-8">
-            {/* WHY THIS MATTERS */}
-            <Card className="border-none shadow-md bg-gradient-to-br from-slate-900 to-slate-800 text-white">
-              <CardContent className="p-8">
-                <div className="flex items-center gap-3 mb-4 text-amber-300">
-                  <Lightbulb className="w-5 h-5" />
-                  <h2 className="font-bold uppercase tracking-wider text-sm">Why this matters</h2>
+            {/* TODAY'S GOAL */}
+            <div className="bg-white rounded-3xl p-8 md:p-10 shadow-sm border border-slate-200 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-blue-50 rounded-full blur-[80px] pointer-events-none -mr-20 -mt-20" />
+              <div className="relative z-10 flex flex-col items-start gap-5">
+                <div className="flex items-center gap-3">
+                  <div className="p-3 bg-blue-100 text-blue-700 rounded-2xl">
+                    <Code2 className="w-6 h-6" />
+                  </div>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <StatusBadge type="activity" status={dayState?.activityStatus || 'not_started'} />
+                    {isCompleted && (
+                      <StatusBadge type="understanding" status={dayState?.understandingStatus || 'not_checked'} />
+                    )}
+                  </div>
                 </div>
-                <p className="text-slate-300 text-lg font-medium leading-relaxed">
-                  {whyItMatters}
-                </p>
-              </CardContent>
-            </Card>
+                
+                <h1 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight mt-2">
+                  {challenge.title}
+                </h1>
+                
+                {/* CHALLENGE METADATA */}
+                <div className="flex flex-wrap items-center gap-3 text-sm font-bold text-slate-600 mb-2">
+                  <div className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 rounded-lg capitalize">
+                    <Wrench className="w-4 h-4 text-slate-500" />
+                    {challenge.challengeType}
+                  </div>
+                  <div className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 rounded-lg capitalize">
+                    <Gauge className="w-4 h-4 text-slate-500" />
+                    {challenge.difficulty}
+                  </div>
+                  <div className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 rounded-lg">
+                    <Clock className="w-4 h-4 text-slate-500" />
+                    {challenge.estimatedMinutes} min
+                  </div>
+                </div>
+
+                <div className="p-4 bg-slate-50 border border-slate-100 rounded-2xl w-full mt-2">
+                  <h3 className="text-sm font-bold text-slate-800 uppercase tracking-widest mb-1 shadow-sm flex items-center gap-2"><Target className="w-4 h-4 text-slate-500"/> Today&apos;s Goal</h3>
+                  <p className="text-lg text-slate-700 font-medium leading-relaxed">
+                    {challenge.description}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* WHY THIS MATTERS & LEARNING OBJECTIVE */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <Card className="border-none shadow-md bg-gradient-to-br from-slate-900 to-slate-800 text-white">
+                <CardContent className="p-6 h-full flex flex-col">
+                  <div className="flex items-center gap-3 mb-3 text-amber-300">
+                    <Lightbulb className="w-5 h-5" />
+                    <h2 className="font-bold uppercase tracking-wider text-sm">Why this matters</h2>
+                  </div>
+                  <p className="text-slate-300 text-base font-medium leading-relaxed mt-auto">
+                    {challenge.whyItMatters}
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card className="border-slate-200 shadow-sm bg-blue-50/50">
+                <CardContent className="p-6 h-full flex flex-col">
+                  <div className="flex items-center gap-3 mb-3 text-blue-700">
+                    <BookOpen className="w-5 h-5" />
+                    <h2 className="font-bold uppercase tracking-wider text-sm">What you&apos;ll learn</h2>
+                  </div>
+                  <p className="text-slate-700 text-base font-medium leading-relaxed mt-auto">
+                    {challenge.learningObjective}
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* CURIOSITY PROMPT */}
+            {challenge.curiosityPrompt && (
+              <Card className="border border-purple-200 shadow-sm bg-purple-50/30">
+                <CardContent className="p-6 flex items-start gap-4">
+                  <div className="p-2 bg-purple-100 text-purple-600 rounded-lg shrink-0 mt-0.5">
+                    <Sparkles className="w-5 h-5" /> 
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-purple-900 mb-1.5 uppercase tracking-widest text-xs">Curiosity Challenge</h3>
+                    <p className="text-purple-800/80 font-medium leading-relaxed">
+                      {challenge.curiosityPrompt}
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
 
             {/* WHAT NEEDS TO BE BUILT */}
             <Card className="border-slate-200 shadow-sm">
@@ -167,11 +218,11 @@ export default function DailyChallengePage({ params }: { params: Promise<{ dayId
                 <CardHeader className="pb-4">
                   <CardTitle className="flex items-center gap-2 text-xl font-extrabold text-slate-900">
                     <Send className={cn("w-5 h-5", isCompleted ? "text-green-600" : "text-blue-600")} /> 
-                    {isCompleted ? "Day Completed" : "Submit Your Work"}
+                    {isCompleted ? `Day ${dayId} completed` : "Submit Your Work"}
                   </CardTitle>
                   <p className="text-sm text-slate-500 font-medium mt-1">
                     {isCompleted 
-                      ? "You've successfully proved your work for today."
+                      ? "Good progress. You shipped something today."
                       : "Prove your work to mark this day complete."}
                   </p>
                 </CardHeader>
@@ -179,26 +230,34 @@ export default function DailyChallengePage({ params }: { params: Promise<{ dayId
                   
                   {isCompleted ? (
                     <div className="flex flex-col gap-6">
-                      <div className="flex flex-col gap-4">
-                        <div className="flex items-center gap-3 p-3 bg-white rounded-lg border border-green-200">
+                      <div className="flex flex-col gap-3">
+                        <div className="flex items-center gap-3 text-slate-700 font-bold text-sm bg-white border border-slate-200 rounded-lg p-3 shadow-sm">
                           <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0" />
-                          <div className="min-w-0">
-                            <p className="text-xs font-bold text-slate-500 uppercase">GitHub Repo</p>
-                            <p className="text-sm font-medium text-slate-900 truncate">{githubUrl}</p>
-                          </div>
+                          <span>Work submitted</span>
                         </div>
-                        <div className="flex items-center gap-3 p-3 bg-white rounded-lg border border-green-200">
+                        <div className="flex items-center gap-3 text-slate-700 font-bold text-sm bg-white border border-slate-200 rounded-lg p-3 shadow-sm">
                           <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0" />
-                          <div className="min-w-0">
-                            <p className="text-xs font-bold text-slate-500 uppercase">LinkedIn Post</p>
-                            <p className="text-sm font-medium text-slate-900 truncate">{linkedinUrl}</p>
-                          </div>
+                          <span>Activity recorded</span>
                         </div>
+                        
+                        {dayState?.understandingStatus === 'understood' && (
+                          <div className="flex items-center gap-3 text-slate-700 font-bold text-sm bg-white border border-slate-200 rounded-lg p-3 shadow-sm">
+                            <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0" />
+                            <span>Understanding checked</span>
+                          </div>
+                        )}
                       </div>
+
+                      {dayState?.understandingStatus === 'needs_revisiting' && (
+                        <div className="flex items-start gap-3 p-4 bg-amber-50 rounded-xl border border-amber-200 text-amber-800 text-sm font-medium">
+                          <AlertCircle className="w-5 h-5 shrink-0 mt-0.5 opacity-80" />
+                          <p>Your work is submitted. Consider revisiting today&apos;s concept when you have time.</p>
+                        </div>
+                      )}
                       
                       <Link 
                         href="/dashboard"
-                        className={cn(buttonVariants({ variant: "default" }), "w-full rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold h-12")}
+                        className={cn(buttonVariants({ variant: "default" }), "w-full rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold h-12 mt-2")}
                       >
                         Back to Dashboard <ArrowLeft className="w-4 h-4 ml-2" />
                       </Link>

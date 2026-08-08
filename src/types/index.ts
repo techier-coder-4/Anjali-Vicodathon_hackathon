@@ -6,6 +6,12 @@ export interface ChallengeData {
   title: string;
   description: string;
   requirements: string[];
+  learningObjective: string;
+  whyItMatters: string;
+  challengeType: 'build' | 'debug' | 'experiment' | 'solve' | 'design' | 'improve' | 'project';
+  difficulty: 'beginner' | 'intermediate' | 'advanced';
+  estimatedMinutes: number;
+  curiosityPrompt: string;
 }
 
 export interface DayState {
@@ -21,3 +27,4 @@ export interface ChallengeContextType {
   updateActivity: (dayId: number, status: ActivityStatus, githubLink?: string, linkedinLink?: string) => void;
   updateUnderstanding: (dayId: number, status: UnderstandingStatus) => void;
 }
+
