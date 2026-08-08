@@ -1,0 +1,2 @@
+src/app/day/[dayId]/page.tsx(13,3): error TS2305: Module '"lucide-react"' has no exported member 'Github'.
+src/app/day/[dayId]/page.tsx(14,3): error TS2305: Module '"lucide-react"' has no exported member 'Linkedin'.
