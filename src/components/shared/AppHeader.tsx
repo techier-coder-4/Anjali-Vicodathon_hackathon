@@ -28,14 +28,20 @@ export function AppHeader({
           </Link>
         )}
         
-        {!showBackButton && (
-          <div className="flex items-center justify-center w-8 h-8 rounded bg-primary/10 text-primary">
-            <BookOpenCheck className="w-5 h-5" />
-          </div>
+        {!showBackButton ? (
+          <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+            <div className="flex items-center justify-center w-8 h-8 rounded bg-primary/10 text-primary">
+              <BookOpenCheck className="w-5 h-5" />
+            </div>
+            <h1 className="font-semibold text-lg tracking-tight select-none">
+              {title}
+            </h1>
+          </Link>
+        ) : (
+          <h1 className="font-semibold text-lg tracking-tight select-none">
+            {title}
+          </h1>
         )}
-        <h1 className="font-semibold text-lg tracking-tight select-none">
-          {title}
-        </h1>
       </div>
     </header>
   );

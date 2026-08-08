@@ -7,28 +7,17 @@ import { MOCK_CHALLENGES } from '../lib/mock-data';
 const ChallengeContext = createContext<ChallengeContextType | undefined>(undefined);
 
 export function ChallengeProvider({ children }: { children: React.ReactNode }) {
-  const [dayStates, setDayStates] = useState<Record<number, DayState>>({});
-
-  useEffect(() => {
-    // Initialize session state from mock data structure
+  const [dayStates, setDayStates] = useState<Record<number, DayState>>(() => {
     const initialState: Record<number, DayState> = {};
     MOCK_CHALLENGES.forEach((challenge) => {
-      if (challenge.dayId === 1) {
-        initialState[challenge.dayId] = {
-          dayId: challenge.dayId,
-          activityStatus: 'pending',
-          understandingStatus: 'not_checked',
-        };
-      } else {
-        initialState[challenge.dayId] = {
-          dayId: challenge.dayId,
-          activityStatus: 'not_started',
-          understandingStatus: 'not_checked',
-        };
-      }
+      initialState[challenge.dayId] = {
+        dayId: challenge.dayId,
+        activityStatus: challenge.dayId === 1 ? 'pending' : 'not_started',
+        understandingStatus: 'not_checked',
+      };
     });
-    setDayStates(initialState);
-  }, []);
+    return initialState;
+  });
 
   const updateActivity = (dayId: number, status: ActivityStatus, githubLink?: string, linkedinLink?: string) => {
     setDayStates((prev) => ({

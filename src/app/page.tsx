@@ -271,7 +271,7 @@ export default function LandingPage() {
                   <div>
                     <h3 className="font-bold text-xl text-slate-900 mb-3 group-hover:text-green-700 transition-colors">Prove Your Work</h3>
                     <p className="text-slate-600 leading-relaxed font-medium">
-                      You don't just say you can code. You demonstrate your progress publicly through daily GitHub commits and LinkedIn updates.
+                      You don&apos;t just say you can code. You demonstrate your progress publicly through daily GitHub commits and LinkedIn updates.
                     </p>
                   </div>
                   <div className="w-12 h-1 bg-green-200 rounded-full mt-auto" />
@@ -306,7 +306,7 @@ export default function LandingPage() {
           <div className="container mx-auto max-w-6xl">
             <div className="text-center max-w-2xl mx-auto mb-20 relative">
               <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 mb-4">How it works</h2>
-              <p className="text-lg font-medium text-slate-600">A simple loop you'll follow for 60 days.</p>
+              <p className="text-lg font-medium text-slate-600">A simple loop you&apos;ll follow for 60 days.</p>
             </div>
             
             <div className="relative">
@@ -381,7 +381,7 @@ export default function LandingPage() {
                 <span className="uppercase tracking-widest text-[11px] font-bold text-purple-400">Our Philosophy</span>
                 
                 <h2 className="text-4xl md:text-5xl lg:text-[42px] font-extrabold tracking-tight text-white leading-tight">
-                  Doing the work isn't the same <br className="hidden md:block" /> as <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 border-b-4 border-purple-500/50 pb-1">understanding</span> the work.
+                  Doing the work isn&apos;t the same <br className="hidden md:block" /> as <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 border-b-4 border-purple-500/50 pb-1">understanding</span> the work.
                 </h2>
                 
                 <p className="text-lg text-slate-300 max-w-lg mb-4 font-medium leading-relaxed">
@@ -716,7 +716,7 @@ export default function LandingPage() {
               60 days. One day at a time.
             </h2>
             <p className="text-[17px] sm:text-lg text-blue-100 mb-12 max-w-xl mx-auto leading-relaxed font-medium drop-shadow-sm">
-              Start your journey today and become the developer you're capable of being.
+              Start your journey today and become the developer you&apos;re capable of being.
             </p>
             <Link 
               href="/dashboard"
